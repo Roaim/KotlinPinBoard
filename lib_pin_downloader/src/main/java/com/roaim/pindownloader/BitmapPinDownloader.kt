@@ -5,14 +5,10 @@ import android.graphics.BitmapFactory
 import com.roaim.pindownloader.data.CacheDataSource
 import com.roaim.pindownloader.data.RemoteDataSource
 import okhttp3.ResponseBody
-import retrofit2.Response
 
 object BitmapRemoteDataSource : RemoteDataSource<Bitmap>() {
-    override fun convert(response: Response<ResponseBody>?): Bitmap? {
-        if (response == null || !response.isSuccessful || response.body() == null || response.errorBody() != null) {
-            return null
-        }
-        val bytes = response.body()!!.bytes()
+    override fun convert(response: ResponseBody): Bitmap {
+        val bytes = response.bytes()
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 }
