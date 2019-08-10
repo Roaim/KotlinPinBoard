@@ -17,5 +17,9 @@ object BitmapCacheDataSource : CacheDataSource<Bitmap>() {
     override fun getContentLength(content: Bitmap): Int = content.byteCount
 }
 
-open class BitmapPinDownloader : PinDownloader<Bitmap>(BitmapCacheDataSource, BitmapRemoteDataSource)
+open class BitmapPinDownloader(
+    cache: BitmapCacheDataSource = BitmapCacheDataSource,
+    remote: BitmapRemoteDataSource = BitmapRemoteDataSource
+) :
+    PinDownloader<Bitmap>(cache, remote)
 
