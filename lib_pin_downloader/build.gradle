@@ -26,32 +26,21 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
-    // Gradle automatically adds 'android.test.runner' as a dependency.
-    useLibrary 'android.test.runner'
-    useLibrary 'android.test.base'
-    useLibrary 'android.test.mock'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    // Assertions
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
-    androidTestImplementation 'com.google.truth:truth:0.44'
+//    androidTestImplementation 'androidx.test:rules:1.2.0'
+//    androidTestImplementation 'androidx.test:runner:1.2.0'
+
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:2.27.0'
     testImplementation 'org.mockito:mockito-inline:2.13.0'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1'
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
-
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation "androidx.arch.core:core-testing:2.0.1"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
@@ -59,8 +48,8 @@ dependencies {
     implementation "androidx.core:core-ktx:1.0.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:adapter-guava:2.6.1'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+/*
     // Basic Dagger 2 (required)
     implementation "com.google.dagger:dagger:$dagger2_version"
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
@@ -69,8 +58,10 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
     // Support library support (optional)
     kapt "com.google.dagger:dagger-android-support:$dagger2_version"
+*/
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
+    implementation 'com.google.guava:guava:28.0-android'
 }
 repositories {
     mavenCentral()

@@ -6,12 +6,17 @@ abstract class RemoteDataSource<T>(
     val remoteApi: RemoteApi = RemoteApi.create()
 ) {
 
-    suspend fun getRemoteContent(url: String, cacheDataSource: CacheDataSource<T>): T {
-        val content = remoteApi.getContent(url)
-        val convertedContent = convert(content)
-        cacheDataSource.addContentToCache(url, convertedContent)
-        return convertedContent
+    suspend fun getRemoteContent(url: String, cacheDataSource: CacheDataSource<T>): T? {
+        val content: ResponseBody? = try {
+            remoteApi.getContent(url)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+        return convert(content).also {
+            cacheDataSource.addContentToCache(url, it)
+        }
     }
 
-    abstract fun convert(response: ResponseBody): T
+    abstract fun convert(response: ResponseBody?): T?
 }

@@ -9,12 +9,12 @@ import org.mockito.Mockito.*
 
 class BitmapCacheDataSourceTest {
 
-    lateinit var bitmap: Bitmap
-
-    lateinit var bitmapCacheDataSource: BitmapCacheDataSource
+    private lateinit var bitmap: Bitmap
+    private lateinit var bitmapCacheDataSource: BitmapCacheDataSource
 
     @Before
     fun setUp() {
+        //TODO Figure out why mockito annotation is not working
         bitmap = mock(Bitmap::class.java)
         bitmapCacheDataSource = spy(BitmapCacheDataSource::class.java)
     }

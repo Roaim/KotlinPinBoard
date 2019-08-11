@@ -26,17 +26,18 @@ class BitmapPinDownloaderTest {
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope = TestCoroutineScope(testDispatcher)
 
-    lateinit var mockRemote: BitmapRemoteDataSource
-    lateinit var mockCache: BitmapCacheDataSource
-    lateinit var bitmapPinDownloader: BitmapPinDownloader
     private val url = "this://is.a.url"
-    lateinit var mockCacheBmp: Bitmap
-    lateinit var mockRemoteBmp: Bitmap
+    private lateinit var mockRemote: BitmapRemoteDataSource
+    private lateinit var mockCache: BitmapCacheDataSource
+    private lateinit var bitmapPinDownloader: BitmapPinDownloader
+    private lateinit var mockCacheBmp: Bitmap
+    private lateinit var mockRemoteBmp: Bitmap
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
 
+        //TODO Figure out why mockito annotation is not working
         mockRemote = mock(BitmapRemoteDataSource::class.java)
         mockCache = mock(BitmapCacheDataSource::class.java)
         bitmapPinDownloader = BitmapPinDownloader(mockCache, mockRemote)
