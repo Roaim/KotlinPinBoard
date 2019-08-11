@@ -12,8 +12,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
 
 @ExperimentalCoroutinesApi
 class BitmapPinDownloaderTest {
@@ -54,7 +53,7 @@ class BitmapPinDownloaderTest {
     @Test
     fun download_whenNotInCache_fetchFromRemote() = testScope.runBlockingTest {
         `when`(mockCache.getContentFromCache(url)).thenReturn(null)
-        `when`(mockRemote.getRemoteContent(url, mockCache)).thenReturn(mockRemoteBmp)
+        `when`(mockRemote.getRemoteContent(url)).thenReturn(mockRemoteBmp)
 
         val download = bitmapPinDownloader.download(url)
 
@@ -63,10 +62,24 @@ class BitmapPinDownloaderTest {
         }
     }
 
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun download_whenFetchFromRemote__shouldAddToCache() = testScope.runBlockingTest {
+        `when`(mockCache.getContentFromCache(url)).thenReturn(null)
+        `when`(mockRemote.getRemoteContent(url)).thenReturn(mockRemoteBmp)
+
+        bitmapPinDownloader.download(url).apply {
+            observeForTesting {
+                verify(mockCache).addContentToCache(url, value)
+            }
+        }
+    }
+
     @Test
     fun download_whenInCache_retrieveFromCache() = testScope.runBlockingTest {
         `when`(mockCache.getContentFromCache(url)).thenReturn(mockCacheBmp)
-        `when`(mockRemote.getRemoteContent(url, mockCache)).thenReturn(mockRemoteBmp)
+        `when`(mockRemote.getRemoteContent(url)).thenReturn(mockRemoteBmp)
 
         val download = bitmapPinDownloader.download(url)
 

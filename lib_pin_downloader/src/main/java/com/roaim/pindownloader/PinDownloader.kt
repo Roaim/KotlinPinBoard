@@ -10,7 +10,9 @@ open class PinDownloader<T>(
     private val remoteDataSource: RemoteDataSource<T>
 ) {
     fun download(url: String): LiveData<T?> = liveData {
-        emit(cacheDataSource.getContentFromCache(url) ?: remoteDataSource.getRemoteContent(url, cacheDataSource))
+        emit(cacheDataSource.getContentFromCache(url) ?: remoteDataSource.getRemoteContent(url)?.also {
+            cacheDataSource.addContentToCache(url, it)
+        })
     }
 }
 

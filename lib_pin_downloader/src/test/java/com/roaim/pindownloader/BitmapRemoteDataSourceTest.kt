@@ -52,26 +52,15 @@ class BitmapRemoteDataSourceTest {
     @Test
     fun getRemoteContent_whenValidResponseBody_shouldReturnBitmap() = testScope.runBlockingTest {
         `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenReturn(mockResponseBody)
-        assertThat(bitmapRemoteDataSource.getRemoteContent(url, mockCacheDataSource), instanceOf(Bitmap::class.java))
+        assertThat(bitmapRemoteDataSource.getRemoteContent(url), instanceOf(Bitmap::class.java))
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun getRemoteContent_whenApiException_shouldReturnNull() = testScope.runBlockingTest {
         `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenThrow(Exception("Bang!"))
-        assertNull(bitmapRemoteDataSource.getRemoteContent(url, mockCacheDataSource))
+        assertNull(bitmapRemoteDataSource.getRemoteContent(url))
     }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun getRemoteContent_shouldAddToCache() = testScope.runBlockingTest {
-        `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenReturn(mockResponseBody)
-
-        val remoteContent = bitmapRemoteDataSource.getRemoteContent(url, mockCacheDataSource)
-
-        verify(mockCacheDataSource).addContentToCache(url, remoteContent)
-    }
-
 
     @Test
     fun getRemoteApi() {
@@ -84,7 +73,7 @@ class BitmapRemoteDataSourceTest {
     fun convert() = testScope.runBlockingTest {
         `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenReturn(mockResponseBody)
 
-        bitmapRemoteDataSource.getRemoteContent(url, mockCacheDataSource)
+        bitmapRemoteDataSource.getRemoteContent(url)
 
         verify(bitmapRemoteDataSource).convert(mockResponseBody)
     }
