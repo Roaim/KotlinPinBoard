@@ -1,4 +1,4 @@
-package com.roaim.pindownloader.data
+package com.roaim.pindownloader.core
 
 import com.roaim.pindownloader.BuildConfig
 import okhttp3.ResponseBody
@@ -13,7 +13,7 @@ interface RemoteApi {
     @Streaming
     @GET
     @Throws(Exception::class)
-    suspend fun getContent(@Url url: String): ResponseBody
+    suspend fun getContent(@Url url: String): ResponseBody //TODO replace ResponseBody with Response<ResponseBody> for better control
 
     companion object Factory {
         fun create(): RemoteApi {

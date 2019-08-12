@@ -2,17 +2,18 @@ package com.roaim.kotlinpinboard
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
+import com.roaim.kotlinpinboard.data.model.Pin
 import com.roaim.kotlinpinboard.databinding.ActivityMainBinding
 import com.roaim.pindownloader.BitmapPinDownloader
+import com.roaim.pindownloader.JsonPinDownloader
+import com.roaim.pindownloader.toPoJo
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -23,6 +24,15 @@ class MainActivity : AppCompatActivity() {
         val bitmapViewModel = ViewModelProviders.of(this).get(BitmapViewModel::class.java)
         binding.vm = bitmapViewModel
         binding.lifecycleOwner = this
+
+        Transformations.switchMap(JsonPinDownloader().download(BuildConfig.SAMPLE_JSON_URL)) {
+            Log.d(javaClass.name, it?.toString())
+            it?.toPoJo(Array<Pin>::class.java)?.run {
+                MutableLiveData<List<Pin>>(asList())
+            }
+        }.observe(this, Observer {
+            Log.d(javaClass.name, it.toString())
+        })
     }
 }
 

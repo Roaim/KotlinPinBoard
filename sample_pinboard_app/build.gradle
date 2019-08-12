@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SAMPLE_JSON_URL", SAMPLE_JSON_URL
     }
     buildTypes {
         release {
@@ -41,4 +42,5 @@ dependencies {
     // Optional : Kotlin extension (https://d.android.com/kotlin/ktx)
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

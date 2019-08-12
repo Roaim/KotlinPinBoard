@@ -1,9 +1,7 @@
-package com.roaim.pindownloader
+package com.roaim.pindownloader.core
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.roaim.pindownloader.data.CacheDataSource
-import com.roaim.pindownloader.data.RemoteDataSource
 
 open class PinDownloader<T>(
     private val cacheDataSource: CacheDataSource<T>,

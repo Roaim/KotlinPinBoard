@@ -1,4 +1,4 @@
-package com.roaim.pindownloader.data
+package com.roaim.pindownloader.core
 
 import androidx.collection.LruCache
 

@@ -1,7 +1,7 @@
 package com.roaim.pindownloader
 
 import android.graphics.Bitmap
-import com.roaim.pindownloader.data.RemoteApi
+import com.roaim.pindownloader.core.RemoteApi
 import com.roaim.pindownloader.mock.MockBitmapRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -80,7 +80,7 @@ class BitmapRemoteDataSourceTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun convert_nullResponseBody_nullBitmap() {
+    fun convert_nullResponseBody_nullBitmap() = testScope.runBlockingTest {
         val bmpRemoteDataSource = spy(BitmapRemoteDataSource::class.java)
         assertNull(bmpRemoteDataSource.convert(null))
     }

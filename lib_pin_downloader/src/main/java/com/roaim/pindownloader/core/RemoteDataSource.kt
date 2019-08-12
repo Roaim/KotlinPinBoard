@@ -1,4 +1,4 @@
-package com.roaim.pindownloader.data
+package com.roaim.pindownloader.core
 
 import okhttp3.ResponseBody
 
@@ -16,5 +16,5 @@ abstract class RemoteDataSource<T>(
         return convert(content)
     }
 
-    abstract fun convert(response: ResponseBody?): T?
+    abstract suspend fun convert(response: ResponseBody?): T?
 }

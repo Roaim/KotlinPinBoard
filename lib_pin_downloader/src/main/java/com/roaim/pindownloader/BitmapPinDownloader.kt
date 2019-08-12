@@ -2,15 +2,16 @@ package com.roaim.pindownloader
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.roaim.pindownloader.data.CacheDataSource
-import com.roaim.pindownloader.data.RemoteDataSource
+import com.roaim.pindownloader.core.CacheDataSource
+import com.roaim.pindownloader.core.PinDownloader
+import com.roaim.pindownloader.core.RemoteDataSource
 import okhttp3.ResponseBody
 
 object BitmapRemoteDataSource : RemoteDataSource<Bitmap>() {
-    override fun convert(response: ResponseBody?): Bitmap? {
+    override suspend fun convert(response: ResponseBody?): Bitmap? {
         // TODO replace bitmap decoding with the procedure showed in
         //  https://developer.android.com/topic/performance/graphics/load-bitmap
-        // now skipping for not to write unit test
+        // now skipping and letting OutOfMemoryException for not to write unit test
         return response?.bytes()?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 }
@@ -20,7 +21,7 @@ object BitmapCacheDataSource : CacheDataSource<Bitmap>() {
 }
 
 open class BitmapPinDownloader(
-    cacheDataSource: BitmapCacheDataSource = BitmapCacheDataSource,
-    remoteDataSource: BitmapRemoteDataSource = BitmapRemoteDataSource
+    cacheDataSource: CacheDataSource<Bitmap> = BitmapCacheDataSource,
+    remoteDataSource: RemoteDataSource<Bitmap> = BitmapRemoteDataSource
 ) : PinDownloader<Bitmap>(cacheDataSource, remoteDataSource)
 

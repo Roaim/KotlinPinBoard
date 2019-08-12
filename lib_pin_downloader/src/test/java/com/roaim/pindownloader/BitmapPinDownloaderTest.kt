@@ -87,18 +87,18 @@ class BitmapPinDownloaderTest {
             assertEquals(download.value, mockCacheBmp)
         }
     }
+}
 
-    // helper method to allow us to get the value from a LiveData
-    // LiveData won't publish a result until there is at least one observer
-    private fun <T> LiveData<T>.observeForTesting(
-        block: () -> Unit
-    ) {
-        val observer = Observer<T> { Unit }
-        try {
-            observeForever(observer)
-            block()
-        } finally {
-            removeObserver(observer)
-        }
+// helper method to allow us to get the value from a LiveData
+// LiveData won't publish a result until there is at least one observer
+fun <T> LiveData<T>.observeForTesting(
+    block: () -> Unit
+) {
+    val observer = Observer<T> { Unit }
+    try {
+        observeForever(observer)
+        block()
+    } finally {
+        removeObserver(observer)
     }
 }
