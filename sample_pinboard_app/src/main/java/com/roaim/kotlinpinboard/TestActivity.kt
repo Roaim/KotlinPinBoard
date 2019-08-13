@@ -4,46 +4,47 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.roaim.kotlinpinboard.data.model.Pin
-import com.roaim.kotlinpinboard.databinding.ActivityMainBinding
+import com.roaim.kotlinpinboard.databinding.ActivityTestBinding
 import com.roaim.pindownloader.BitmapPinDownloader
 import com.roaim.pindownloader.JsonPinDownloader
 import com.roaim.pindownloader.toPoJo
 
-class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+class TestActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityTestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_test)
         val bitmapViewModel = ViewModelProviders.of(this).get(BitmapViewModel::class.java)
         binding.vm = bitmapViewModel
         binding.lifecycleOwner = this
 
         Transformations.switchMap(JsonPinDownloader().download(BuildConfig.SAMPLE_JSON_URL)) {
-            Log.d(javaClass.name, it?.toString())
+            Log.d(javaClass.name, "${it?.toString()}")
             it?.toPoJo(Array<Pin>::class.java)?.run {
                 MutableLiveData<List<Pin>>(asList())
             }
         }.observe(this, Observer {
-            Log.d(javaClass.name, it.toString())
+            Log.d(javaClass.name, "${it?.toString()}")
         })
     }
 }
 
 class BitmapViewModel : ViewModel() {
-    private val bmpUrlList = listOf(
-        "https://images.unsplash.com/photo-1464550883968-cec281c19761?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=9fba74be19d78b1aa2495c0200b9fbce",
-        "https://images.unsplash.com/photo-1464550838636-1a3496df938b?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=9947985b2095f1c8fbbbe09a93b9b1d9",
-        // returns 404
-        "https://images.unsplash.com/photo-1464550580740-b3f73fd373cb?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=32eedaa5d930578ff89cff9195472650",
-        "https://images.unsplash.com/photo-1464547323744-4edd0cd0c746?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=94a7331fc80787d57ba3b4b0c757131f"
-    )
+    companion object {
+        private val bmpUrlList = listOf(
+            "https://images.unsplash.com/photo-1464550883968-cec281c19761?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=9fba74be19d78b1aa2495c0200b9fbce",
+            "https://images.unsplash.com/photo-1464550838636-1a3496df938b?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=9947985b2095f1c8fbbbe09a93b9b1d9",
+            // returns 404
+            "https://images.unsplash.com/photo-1464550580740-b3f73fd373cb?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=32eedaa5d930578ff89cff9195472650",
+            "https://images.unsplash.com/photo-1464547323744-4edd0cd0c746?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=200&fit=max&s=94a7331fc80787d57ba3b4b0c757131f"
+        )
+    }
+
     private val bitmapDownloader = BitmapPinDownloader()
 
     private val _progress = MutableLiveData<Int>()
@@ -88,12 +89,5 @@ class BitmapViewModel : ViewModel() {
                 removeObserver {}
             }
         }
-    }
-}
-
-object MainBindingAdapter {
-    @BindingAdapter("imageBitmap")
-    fun setImageBitmap(imageView: ImageView, liveData: LiveData<Bitmap>) {
-        liveData.value?.let { imageView.setImageBitmap(it) }
     }
 }

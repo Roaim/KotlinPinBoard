@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="pin"
+                type="com.roaim.kotlinpinboard.data.model.Pin"/>
+    </data>
+
+    <FrameLayout
+            android:transitionName="hridoy"
+            android:id="@+id/frameThumb"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ProgressBar
+                android:visibility="@{pin.progress}"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.roaim.kotlinpinboard.utils.ThumbView
+                android:id="@+id/ivThumb"
+                imageBitmap="@{pin.thumb}"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/tvTitle"
+                android:background="#75000000"
+                android:textColor="#fff"
+                tool:text="Bitmap id"
+                android:text="@{pin.id}"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+</layout>

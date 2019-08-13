@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Kotlin Pin Board</string>
+    <string name="title_activity_pin_board">Pin Board</string>
+    <string name="action_settings">Settings</string>
+    <string name="transition_title">PinTransitionTitle</string>
+    <string name="transition_image">PinTransitionImage</string>
 </resources>

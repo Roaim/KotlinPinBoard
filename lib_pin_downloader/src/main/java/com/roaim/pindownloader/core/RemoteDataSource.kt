@@ -13,7 +13,8 @@ abstract class RemoteDataSource<T>(
             e.printStackTrace()
             null
         }
-        return convert(content)
+        val convert = convert(content)
+        return convert
     }
 
     abstract suspend fun convert(response: ResponseBody?): T?

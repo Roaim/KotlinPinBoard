@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav"
+            app:startDestination="@id/pinBoardFragment2">
+    <fragment
+            android:id="@+id/pinBoardFragment2"
+            android:name="com.roaim.kotlinpinboard.pinboard.PinBoardFragment"
+            android:label="fragment_pin_board"
+            tools:layout="@layout/fragment_pin_board">
+        <action
+                android:id="@+id/action_pinBoardFragment2_to_pinDetailsFragment2"
+                app:destination="@id/pinDetailsFragment">
+            <argument
+                    android:name="title"
+                    app:argType="string"/>
+            <argument
+                    android:name="imgUrl"
+                    app:argType="string"/>
+        </action>
+        <action
+                android:id="@+id/action_pinBoardFragment2_to_testActivity2"
+                app:destination="@id/testActivity2"/>
+    </fragment>
+    <fragment
+            android:id="@+id/pinDetailsFragment"
+            android:name="com.roaim.kotlinpinboard.pindetails.PinDetailsFragment"
+            android:label="pin_details_fragment"
+            tools:layout="@layout/pin_details_fragment">
+        <action
+                android:id="@+id/action_pinDetailsFragment2_to_testActivity2"
+                app:destination="@id/testActivity2"/>
+
+        <argument
+                android:name="title"
+                app:argType="string"
+                app:nullable="true"/>
+        <argument
+                android:name="imgUrl"
+                app:argType="string"/>
+
+    </fragment>
+    <activity
+            android:id="@+id/testActivity2"
+            android:name="com.roaim.kotlinpinboard.TestActivity"
+            android:label="TestActivity"/>
+</navigation>

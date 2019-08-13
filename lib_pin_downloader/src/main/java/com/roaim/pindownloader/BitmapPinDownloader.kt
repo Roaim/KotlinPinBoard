@@ -5,14 +5,16 @@ import android.graphics.BitmapFactory
 import com.roaim.pindownloader.core.CacheDataSource
 import com.roaim.pindownloader.core.PinDownloader
 import com.roaim.pindownloader.core.RemoteDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
 object BitmapRemoteDataSource : RemoteDataSource<Bitmap>() {
-    override suspend fun convert(response: ResponseBody?): Bitmap? {
+    override suspend fun convert(response: ResponseBody?): Bitmap? = withContext(Dispatchers.IO){
         // TODO replace bitmap decoding with the procedure showed in
         //  https://developer.android.com/topic/performance/graphics/load-bitmap
         // now skipping and letting OutOfMemoryException for not to write unit test
-        return response?.bytes()?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+        response?.bytes()?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 }
 

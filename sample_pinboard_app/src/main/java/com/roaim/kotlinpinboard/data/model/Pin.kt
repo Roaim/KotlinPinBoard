@@ -1,5 +1,9 @@
 package com.roaim.kotlinpinboard.data.model
 
+import android.graphics.Bitmap
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.annotations.Expose
+
 data class Pin(
     val urls: Urls? = null,
     val currentUserCollections: List<Any?>? = null,
@@ -12,5 +16,7 @@ data class Pin(
     val likedByUser: Boolean? = null,
     val user: User? = null,
     val height: Int? = null,
-    val likes: Int? = null
+    val likes: Int? = null,
+    @Expose val thumb: MutableLiveData<Bitmap> = MutableLiveData(),
+    @Expose val progress: MutableLiveData<Int> = MutableLiveData()
 )

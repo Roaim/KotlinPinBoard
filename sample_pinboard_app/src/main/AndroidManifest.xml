@@ -8,17 +8,21 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
+            android:usesCleartextTraffic="true"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:networkSecurityConfig="@xml/net_sec_confg"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".PinActivity"
+                android:label="@string/title_activity_pin_board"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".TestActivity"/>
     </application>
 
 </manifest>
