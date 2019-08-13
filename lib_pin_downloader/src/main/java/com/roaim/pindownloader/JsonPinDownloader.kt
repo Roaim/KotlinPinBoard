@@ -5,8 +5,6 @@ import com.google.gson.JsonElement
 import com.roaim.pindownloader.core.CacheDataSource
 import com.roaim.pindownloader.core.PinDownloader
 import com.roaim.pindownloader.core.RemoteDataSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
 object JsonCacheDataSource : CacheDataSource<JsonElement>() {
@@ -17,16 +15,14 @@ object JsonCacheDataSource : CacheDataSource<JsonElement>() {
 }
 
 object JsonRemoteDataSource : RemoteDataSource<JsonElement>() {
-    override suspend fun convert(response: ResponseBody?): JsonElement? = withContext(Dispatchers.IO){
+    override suspend fun convert(response: ResponseBody?): JsonElement? =
         response?.string().let {
             Gson().fromJson(it, JsonElement::class.java)
         }
-    }
+
 }
 
-open class JsonPinDownloader(
-    cacheDataSource: CacheDataSource<JsonElement> = JsonCacheDataSource,
-    remoteDataSource: RemoteDataSource<JsonElement> = JsonRemoteDataSource
+open class JsonPinDownloader(cacheDataSource: CacheDataSource<JsonElement> = JsonCacheDataSource, remoteDataSource: RemoteDataSource<JsonElement> = JsonRemoteDataSource
 ) : PinDownloader<JsonElement>(cacheDataSource, remoteDataSource)
 
 fun <T> JsonElement.toPoJo(c: Class<T>): T {

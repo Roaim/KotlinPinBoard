@@ -1,9 +1,12 @@
 package com.roaim.pindownloader
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.roaim.pindownloader.core.RemoteApi
 import com.roaim.pindownloader.mock.MockJson
 import com.roaim.pindownloader.mock.MockPoJo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -13,11 +16,14 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.*
 
 @ExperimentalCoroutinesApi
 class JsonRemoteDataSourceTest {
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
 
     private val testDispatcher = TestCoroutineDispatcher()
     @Before
