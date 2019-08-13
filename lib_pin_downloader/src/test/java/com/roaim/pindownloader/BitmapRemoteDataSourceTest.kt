@@ -5,6 +5,7 @@ import com.roaim.pindownloader.core.RemoteApi
 import com.roaim.pindownloader.mock.MockBitmapRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.test.*
 import okhttp3.ResponseBody
 import org.hamcrest.CoreMatchers.instanceOf
@@ -52,30 +53,20 @@ class BitmapRemoteDataSourceTest {
     @Test
     fun getRemoteContent_whenValidResponseBody_shouldReturnBitmap() = testScope.runBlockingTest {
         `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenReturn(mockResponseBody)
-        assertThat(bitmapRemoteDataSource.getRemoteContent(url), instanceOf(Bitmap::class.java))
+        assertThat(async { bitmapRemoteDataSource.getRemoteContent(url)}.await(), instanceOf(Bitmap::class.java))
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun getRemoteContent_whenApiException_shouldReturnNull() = testScope.runBlockingTest {
-        `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenThrow(Exception("Bang!"))
-        assertNull(bitmapRemoteDataSource.getRemoteContent(url))
+        `when`(async { bitmapRemoteDataSource.remoteApi.getContent(url)}.await()).thenThrow(Exception("Bang!"))
+        assertNull(async { bitmapRemoteDataSource.getRemoteContent(url)}.await())
     }
 
     @Test
     fun getRemoteApi() {
         `when`(bitmapRemoteDataSource.remoteApi).thenReturn(mockApi)
         assertEquals(bitmapRemoteDataSource.remoteApi, mockApi)
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun convert() = testScope.runBlockingTest {
-        `when`(bitmapRemoteDataSource.remoteApi.getContent(url)).thenReturn(mockResponseBody)
-
-        bitmapRemoteDataSource.getRemoteContent(url)
-
-        verify(bitmapRemoteDataSource).convert(mockResponseBody)
     }
 
     @ExperimentalCoroutinesApi

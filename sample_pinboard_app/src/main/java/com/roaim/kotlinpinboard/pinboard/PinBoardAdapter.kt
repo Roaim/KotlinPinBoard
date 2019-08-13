@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagedListAdapter
@@ -59,15 +60,9 @@ class ViewHolder private constructor(private val binding: ItemPinBinding) :
     fun bind(viewModel: PinBoardViewModel, item: Pin) {
         binding.pin = item
         viewModel.downloadThumb(item)
-
-        val fragmentNavigatorExtras = FragmentNavigatorExtras(
-            binding.frameThumb to "hridoy"
-        )
         val action =
             PinBoardFragmentDirections.actionPinBoardFragment2ToPinDetailsFragment2(item.id!!, item.urls?.regular!!)
-        binding.frameThumb.setOnClickListener {
-            it.findNavController().navigate(action, fragmentNavigatorExtras)
-        }
+        binding.frameThumb.setOnClickListener(Navigation.createNavigateOnClickListener(action))
     }
 
     companion object {

@@ -10,7 +10,6 @@
     </data>
 
     <FrameLayout
-            android:transitionName="hridoy"
             android:id="@+id/frameThumb"
             android:clickable="true"
             android:focusable="true"

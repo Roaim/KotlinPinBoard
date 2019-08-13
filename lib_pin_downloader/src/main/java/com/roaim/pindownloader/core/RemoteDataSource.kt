@@ -1,5 +1,7 @@
 package com.roaim.pindownloader.core
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
 abstract class RemoteDataSource<T>(
@@ -13,8 +15,7 @@ abstract class RemoteDataSource<T>(
             e.printStackTrace()
             null
         }
-        val convert = convert(content)
-        return convert
+        return withContext(Dispatchers.IO) {convert(content)}
     }
 
     abstract suspend fun convert(response: ResponseBody?): T?

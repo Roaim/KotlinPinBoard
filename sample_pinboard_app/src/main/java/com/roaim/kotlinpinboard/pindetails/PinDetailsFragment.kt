@@ -18,13 +18,9 @@ class PinDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        postponeEnterTransition()
         val viewModel by viewModels<PinDetailsViewModel> { PinViewModelFactory(PinRepository()) }
         return PinDetailsFragmentBinding.inflate(inflater, container, false).also {
             it.viewmodel = viewModel
-            viewModel.image.observe(this, Observer {
-                startPostponedEnterTransition()
-            })
         }.run {
             lifecycleOwner = this@PinDetailsFragment
             val safeArg = PinDetailsFragmentArgs.fromBundle(arguments!!)
@@ -32,12 +28,6 @@ class PinDetailsFragment : Fragment() {
             viewModel.downloadImage(safeArg.imgUrl)
             root
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-
     }
 
 }
