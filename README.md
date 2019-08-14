@@ -1,5 +1,6 @@
 # KotlinPinBoard
-An async remote resource downloading library with sample pin board application using Android Jetpack written in Kotlin. ** Read the Wiki to know more about the project.**
+An async remote resource downloading library with sample pin board application using Android Jetpack written in Kotlin. 
+** Read the [Wiki](https://github.com/Roaim/KotlinPinBoard/wiki) to know more about the project.**
 
 ## Technologies
 * Android
@@ -34,7 +35,7 @@ An async remote resource downloading library with sample pin board application u
 * Upon clicking on an item navigate to full image screen with the help of Navigation Component
 
 ## Yet to come
-* [ ] Efficiently decoding Bitmap by following https://developer.android.com/topic/performance/graphics/load-bitmap
-* [ ] Make PinDownloader<T> return a sealed class object Pin<T> containing Loading, Success, Failure data classes instead of returning just T
-* [ ] Publish the library to Jitpack.io
+* [ ] Efficiently decoding Bitmap by following [Official documentation](https://developer.android.com/topic/performance/graphics/load-bitmap)
+* [ ] Make `PinDownloader<T>` return a sealed class object `Pin<T>` containing `Loading`, `Success`, `Failure` data classes instead of returning just `T`
+* [ ] Publish the library to [Jitpack.io](https://jitpack.io/)/[Bintray](https://bintray.com/)
 * [ ] LocalUnitTests, IntegrationTests and UITests
