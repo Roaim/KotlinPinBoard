@@ -1,6 +1,7 @@
 package com.roaim.pindownloader
 
 import android.graphics.Bitmap
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.roaim.pindownloader.core.RemoteApi
 import com.roaim.pindownloader.mock.MockBitmapRemoteDataSource
 import kotlinx.coroutines.Dispatchers
@@ -12,12 +13,14 @@ import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.*
 
 class BitmapRemoteDataSourceTest {
     private val url = "https://images.unsplash.com"
-
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
     @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
     @ExperimentalCoroutinesApi

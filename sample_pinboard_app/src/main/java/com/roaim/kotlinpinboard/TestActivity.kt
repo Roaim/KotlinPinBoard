@@ -7,7 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
-import com.roaim.kotlinpinboard.data.model.Pin
+import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.databinding.ActivityTestBinding
 import com.roaim.pindownloader.BitmapPinDownloader
 import com.roaim.pindownloader.JsonPinDownloader
@@ -25,8 +25,8 @@ class TestActivity : AppCompatActivity() {
 
         Transformations.switchMap(JsonPinDownloader().download(BuildConfig.SAMPLE_JSON_URL)) {
             Log.d(javaClass.name, "${it?.toString()}")
-            it?.toPoJo(Array<Pin>::class.java)?.run {
-                MutableLiveData<List<Pin>>(asList())
+            it?.toPoJo(Array<LoremPicksum>::class.java)?.run {
+                MutableLiveData<List<LoremPicksum>>(asList())
             }
         }.observe(this, Observer {
             Log.d(javaClass.name, "${it?.toString()}")

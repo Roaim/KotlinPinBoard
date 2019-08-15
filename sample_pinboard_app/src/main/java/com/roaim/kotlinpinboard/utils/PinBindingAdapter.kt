@@ -6,11 +6,11 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
-import com.roaim.kotlinpinboard.data.model.Pin
+import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.pinboard.PinAdapter
 
 @BindingAdapter("pageItems")
-fun setItems(listView: RecyclerView, items: LiveData<PagedList<Pin>>) {
+fun setItems(listView: RecyclerView, items: LiveData<PagedList<LoremPicksum>>) {
     items.value.also {
         (listView.adapter as PinAdapter).submitList(it)
     }

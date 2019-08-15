@@ -6,15 +6,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.roaim.kotlinpinboard.data.model.Pin
+import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.databinding.ItemPinBinding
 
-class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<Pin, ViewHolder>(PinDiffCallback()) {
+class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<LoremPicksum, ViewHolder>(PinDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -57,11 +55,11 @@ class ViewHolder private constructor(private val binding: ItemPinBinding) :
         lifecycleReg.currentState = Lifecycle.State.DESTROYED
     }
 
-    fun bind(viewModel: PinBoardViewModel, item: Pin) {
+    fun bind(viewModel: PinBoardViewModel, item: LoremPicksum) {
         binding.pin = item
         viewModel.downloadThumb(item)
         val action =
-            PinBoardFragmentDirections.actionPinBoardFragment2ToPinDetailsFragment2(item.id!!, item.urls?.regular!!)
+            PinBoardFragmentDirections.actionPinBoardFragment2ToPinDetailsFragment2(item.author!!, "https://picsum.photos/id/${item.id}/1080/1920")
         binding.frameThumb.setOnClickListener(Navigation.createNavigateOnClickListener(action))
     }
 
@@ -80,12 +78,12 @@ class ViewHolder private constructor(private val binding: ItemPinBinding) :
  * Used by ListAdapter to calculate the minimum number of changes between and old list and a new
  * list that's been passed to `submitList`.
  */
-class PinDiffCallback : DiffUtil.ItemCallback<Pin>() {
-    override fun areItemsTheSame(oldItem: Pin, newItem: Pin): Boolean {
+class PinDiffCallback : DiffUtil.ItemCallback<LoremPicksum>() {
+    override fun areItemsTheSame(oldItem: LoremPicksum, newItem: LoremPicksum): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Pin, newItem: Pin): Boolean {
+    override fun areContentsTheSame(oldItem: LoremPicksum, newItem: LoremPicksum): Boolean {
         return oldItem == newItem
     }
 }

@@ -6,7 +6,7 @@
 
         <variable
                 name="pin"
-                type="com.roaim.kotlinpinboard.data.model.Pin"/>
+                type="com.roaim.kotlinpinboard.data.model.LoremPicksum"/>
     </data>
 
     <FrameLayout
@@ -37,7 +37,7 @@
                 android:background="#75000000"
                 android:textColor="#fff"
                 tool:text="Bitmap id"
-                android:text="@{pin.id}"
+                android:text="@{pin.author}"
                 android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
