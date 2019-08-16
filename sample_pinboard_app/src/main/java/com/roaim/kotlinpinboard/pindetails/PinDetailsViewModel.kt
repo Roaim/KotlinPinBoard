@@ -4,8 +4,10 @@ import android.graphics.Bitmap
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.roaim.kotlinpinboard.data.PinRepository
+import com.roaim.kotlinpinboard.utils.observeOnce
 
 class PinDetailsViewModel(private val repository: PinRepository) : ViewModel() {
     private val _progress = MutableLiveData<Int>()
@@ -28,10 +30,9 @@ class PinDetailsViewModel(private val repository: PinRepository) : ViewModel() {
 
     fun downloadImage(url: String) = repository.getBitmap(url).apply {
         _progress.value = View.VISIBLE
-        observeForever {
+        observeOnce(Observer {
             _progress.value = View.GONE
             _image.value = it
-            removeObserver { }
-        }
+        })
     }
 }

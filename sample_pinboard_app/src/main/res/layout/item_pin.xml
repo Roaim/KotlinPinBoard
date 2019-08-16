@@ -5,6 +5,10 @@
     <data>
 
         <variable
+                name="vm"
+                type="com.roaim.kotlinpinboard.pinboard.PinBoardViewModel"/>
+
+        <variable
                 name="pin"
                 type="com.roaim.kotlinpinboard.data.model.LoremPicksum"/>
     </data>
@@ -14,19 +18,18 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
+            android:onClick="@{(v)->vm.onPinClick(v, pin)}"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <ProgressBar
-                android:visibility="@{pin.progress}"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <com.roaim.kotlinpinboard.utils.ThumbView
                 android:id="@+id/ivThumb"
-                imageBitmap="@{pin.thumb}"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"

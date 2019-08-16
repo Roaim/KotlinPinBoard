@@ -20,7 +20,7 @@
                 android:id="@+id/pinList"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                pageItems="@{viewModel.pinList}"
+                pinItems="@{viewModel.pinList}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"

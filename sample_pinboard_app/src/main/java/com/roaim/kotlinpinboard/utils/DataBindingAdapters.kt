@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.pinboard.PinAdapter
 
-@BindingAdapter("pageItems")
+@BindingAdapter("pinItems")
 fun setItems(listView: RecyclerView, items: LiveData<PagedList<LoremPicksum>>) {
-    items.value.also {
-        (listView.adapter as PinAdapter).submitList(it)
+    listView.let { it.adapter as PinAdapter }.run {
+        submitList(items.value)
     }
 }
 
 @BindingAdapter("imageBitmap")
-fun setImageBitmap(imageView: ImageView, liveData: LiveData<Bitmap>) {
+fun setImageBitmap(imageView: ImageView, liveData: LiveData<Bitmap?>) {
     liveData.value?.let { imageView.setImageBitmap(it) }
 }
