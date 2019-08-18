@@ -2,6 +2,7 @@ package com.roaim.kotlinpinboard.pinboard
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -20,6 +21,9 @@ class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<Lo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        if (viewModel.progress.value == View.VISIBLE) {
+            viewModel.progress.value = View.GONE
+        }
         return ViewHolder.from(parent, viewModel)
     }
 }

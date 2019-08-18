@@ -1,6 +1,7 @@
 package com.roaim.kotlinpinboard.pinboard
 
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.roaim.kotlinpinboard.R
@@ -13,6 +14,8 @@ class PinBoardViewModel(private val repository: PinRepository = PinRepository())
     fun downloadThumb(pin: LoremPicksum) = pin.id?.let { id ->
         repository.getBitmap(Constants.getThumbUrl(id))
     }
+
+    val progress = MutableLiveData(View.VISIBLE)
 
     val pinList = repository.getPins()
 

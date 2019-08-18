@@ -26,6 +26,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
@@ -49,6 +53,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:adapter-guava:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
 /*
     // Basic Dagger 2 (required)
     implementation "com.google.dagger:dagger:$dagger2_version"
