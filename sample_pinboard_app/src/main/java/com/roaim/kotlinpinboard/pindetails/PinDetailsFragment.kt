@@ -28,8 +28,8 @@ class PinDetailsFragment : Fragment() {
             lifecycleOwner = this@PinDetailsFragment
             val safeArg = PinDetailsFragmentArgs.fromBundle(arguments!!)
             viewModel.setTitle(safeArg.title ?: "Something wrong!")
-            viewModel.downloadImage(safeArg.imgUrl)
             viewModel.downloadImage(safeArg.thumbUrl)
+            viewModel.downloadImage(safeArg.imgUrl)
             root
         }
     }
