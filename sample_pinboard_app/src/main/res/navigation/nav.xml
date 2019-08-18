@@ -19,18 +19,12 @@
                     android:name="imgUrl"
                     app:argType="string"/>
         </action>
-        <action
-                android:id="@+id/action_pinBoardFragment2_to_testActivity2"
-                app:destination="@id/testActivity2"/>
     </fragment>
     <fragment
             android:id="@+id/pinDetailsFragment"
             android:name="com.roaim.kotlinpinboard.pindetails.PinDetailsFragment"
             android:label="pin_details_fragment"
             tools:layout="@layout/pin_details_fragment">
-        <action
-                android:id="@+id/action_pinDetailsFragment2_to_testActivity2"
-                app:destination="@id/testActivity2"/>
 
         <argument
                 android:name="title"
@@ -41,8 +35,4 @@
                 app:argType="string"/>
 
     </fragment>
-    <activity
-            android:id="@+id/testActivity2"
-            android:name="com.roaim.kotlinpinboard.TestActivity"
-            android:label="TestActivity"/>
 </navigation>

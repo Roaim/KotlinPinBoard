@@ -1,75 +1,62 @@
 package com.roaim.kotlinpinboard.pinboard
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.roaim.kotlinpinboard.data.model.Pin
+import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.databinding.ItemPinBinding
+import com.roaim.kotlinpinboard.utils.observeOnce
 
-class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<Pin, ViewHolder>(PinDiffCallback()) {
+class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<LoremPicksum, ViewHolder>(PinDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(viewModel, item!!)
+        holder.bind(item!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
-    }
-
-    override fun onViewAttachedToWindow(holder: ViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.attach()
-    }
-
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.detach()
+        if (viewModel.progress.value == View.VISIBLE) {
+            viewModel.progress.value = View.GONE
+        }
+        return ViewHolder.from(parent, viewModel)
     }
 }
 
-class ViewHolder private constructor(private val binding: ItemPinBinding) :
-    RecyclerView.ViewHolder(binding.root), LifecycleOwner {
-    private val lifecycleReg = LifecycleRegistry(this)
+class ViewHolder private constructor(private val binding: ItemPinBinding, private val viewModel: PinBoardViewModel) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    override fun getLifecycle(): Lifecycle {
-        return lifecycleReg
-    }
+    private var liveData: LiveData<Bitmap?>? = null
+    private var liveDataObserver: Observer<Bitmap?>? = null
 
-    init {
-        lifecycleReg.currentState = Lifecycle.State.INITIALIZED
-        binding.lifecycleOwner = this
-    }
-
-    fun attach() {
-        lifecycleReg.currentState = Lifecycle.State.STARTED
-    }
-
-    fun detach() {
-        lifecycleReg.currentState = Lifecycle.State.DESTROYED
-    }
-
-    fun bind(viewModel: PinBoardViewModel, item: Pin) {
-        binding.pin = item
-        viewModel.downloadThumb(item)
-        val action =
-            PinBoardFragmentDirections.actionPinBoardFragment2ToPinDetailsFragment2(item.id!!, item.urls?.regular!!)
-        binding.frameThumb.setOnClickListener(Navigation.createNavigateOnClickListener(action))
+    fun bind(item: LoremPicksum) {
+        liveData?.takeIf { it.hasObservers() }?.run {
+            removeObserver(liveDataObserver!!)
+            binding
+        }
+        with(binding) {
+            pin = item
+            ivThumb.setImageBitmap(null)
+            viewModel.downloadThumb(item)?.also { ld -> liveData = ld }?.observeOnce(Observer<Bitmap?> {
+                binding.ivThumb.setImageBitmap(it)
+            }.also {
+                liveDataObserver = it
+            })
+        }
     }
 
     companion object {
-        fun from(parent: ViewGroup): ViewHolder {
+        fun from(parent: ViewGroup, viewModel: PinBoardViewModel): ViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemPinBinding.inflate(layoutInflater, parent, false)
-            return ViewHolder(binding)
+            return ItemPinBinding.inflate(layoutInflater, parent, false).run {
+                vm = viewModel
+                ViewHolder(this, viewModel)
+            }
         }
     }
 }
@@ -80,12 +67,12 @@ class ViewHolder private constructor(private val binding: ItemPinBinding) :
  * Used by ListAdapter to calculate the minimum number of changes between and old list and a new
  * list that's been passed to `submitList`.
  */
-class PinDiffCallback : DiffUtil.ItemCallback<Pin>() {
-    override fun areItemsTheSame(oldItem: Pin, newItem: Pin): Boolean {
+class PinDiffCallback : DiffUtil.ItemCallback<LoremPicksum>() {
+    override fun areItemsTheSame(oldItem: LoremPicksum, newItem: LoremPicksum): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Pin, newItem: Pin): Boolean {
+    override fun areContentsTheSame(oldItem: LoremPicksum, newItem: LoremPicksum): Boolean {
         return oldItem == newItem
     }
 }

@@ -6,17 +6,17 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
-import com.roaim.kotlinpinboard.data.model.Pin
+import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.pinboard.PinAdapter
 
-@BindingAdapter("pageItems")
-fun setItems(listView: RecyclerView, items: LiveData<PagedList<Pin>>) {
-    items.value.also {
-        (listView.adapter as PinAdapter).submitList(it)
+@BindingAdapter("pinItems")
+fun setItems(listView: RecyclerView, items: LiveData<PagedList<LoremPicksum>>) {
+    listView.let { it.adapter as PinAdapter }.run {
+        submitList(items.value)
     }
 }
 
 @BindingAdapter("imageBitmap")
-fun setImageBitmap(imageView: ImageView, liveData: LiveData<Bitmap>) {
+fun setImageBitmap(imageView: ImageView, liveData: LiveData<Bitmap?>) {
     liveData.value?.let { imageView.setImageBitmap(it) }
 }

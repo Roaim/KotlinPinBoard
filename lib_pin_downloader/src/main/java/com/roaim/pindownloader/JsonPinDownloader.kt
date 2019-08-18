@@ -2,10 +2,12 @@ package com.roaim.pindownloader
 
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.google.gson.stream.JsonReader
 import com.roaim.pindownloader.core.CacheDataSource
 import com.roaim.pindownloader.core.PinDownloader
 import com.roaim.pindownloader.core.RemoteDataSource
 import okhttp3.ResponseBody
+import java.io.StringReader
 
 object JsonCacheDataSource : CacheDataSource<JsonElement>() {
     @ExperimentalStdlibApi
@@ -17,7 +19,9 @@ object JsonCacheDataSource : CacheDataSource<JsonElement>() {
 object JsonRemoteDataSource : RemoteDataSource<JsonElement>() {
     override suspend fun convert(response: ResponseBody?): JsonElement? =
         response?.string().let {
-            Gson().fromJson(it, JsonElement::class.java)
+            val reader = JsonReader(StringReader(it))
+            reader.isLenient = true
+            Gson().fromJson(reader, JsonElement::class.java)
         }
 
 }
