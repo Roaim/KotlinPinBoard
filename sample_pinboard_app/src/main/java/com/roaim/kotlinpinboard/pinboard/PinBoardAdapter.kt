@@ -51,7 +51,10 @@ class ViewHolder private constructor(private val binding: ItemPinBinding, privat
     }
 
     companion object {
-        fun from(parent: ViewGroup, viewModel: PinBoardViewModel): ViewHolder {
+        fun from(
+            parent: ViewGroup,
+            viewModel: PinBoardViewModel
+        ): ViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return ItemPinBinding.inflate(layoutInflater, parent, false).run {
                 vm = viewModel

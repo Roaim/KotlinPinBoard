@@ -18,6 +18,9 @@
             <argument
                     android:name="imgUrl"
                     app:argType="string"/>
+            <argument
+                    android:name="thumbUrl"
+                    app:argType="string"/>
         </action>
     </fragment>
     <fragment
@@ -32,6 +35,9 @@
                 app:nullable="true"/>
         <argument
                 android:name="imgUrl"
+                app:argType="string"/>
+        <argument
+                android:name="thumbUrl"
                 app:argType="string"/>
 
     </fragment>
