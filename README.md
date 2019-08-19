@@ -75,6 +75,8 @@ fun downloadJson(lifecycleOwner: LifecycleOwner, url: String) {
 * Display images in Gallery by RecyclerView and PagedListAdapter
 * Load more data when scrolling to the end of the list
 * Upon clicking on an item navigate to full image screen with the help of Navigation Component
+#### Preview:
+![Sample app screencast](20190819_062404.gif)
 
 ## Yet to come
 * [ ] Efficiently decoding Bitmap by following [Official documentation](https://developer.android.com/topic/performance/graphics/load-bitmap)
