@@ -15,11 +15,12 @@ import com.roaim.kotlinpinboard.utils.PinViewModelFactory
  */
 class PinBoardFragment : Fragment() {
 
+    private val viewModel by viewModels<PinBoardViewModel> { PinViewModelFactory(PinRepository()) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val viewModel by viewModels<PinBoardViewModel> { PinViewModelFactory(PinRepository()) }
         return FragmentPinBoardBinding.inflate(inflater, container, false).also {
             it.viewModel = viewModel
         }.run {

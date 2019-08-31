@@ -16,6 +16,7 @@ import com.roaim.kotlinpinboard.utils.PinViewModelFactory
 
 class PinDetailsFragment : Fragment() {
 
+    private val viewModel by viewModels<PinDetailsViewModel> { PinViewModelFactory(PinRepository()) }
     private lateinit var binding: PinDetailsFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,7 @@ class PinDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val viewModel by viewModels<PinDetailsViewModel> { PinViewModelFactory(PinRepository()) }
-        viewModel.actionBarHide.observe(this, Observer {
+        viewModel.actionBarHide.observe(viewLifecycleOwner, Observer {
             hideActionBar(it)
         })
         return PinDetailsFragmentBinding.inflate(inflater, container, false).also {
