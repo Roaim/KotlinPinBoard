@@ -14,8 +14,13 @@ class PinDetailsViewModel(private val repository: PinRepository) : ViewModel() {
     val progress: LiveData<Int>
         get() = _progress
 
+    private val _actionBarHide = MutableLiveData<Boolean>()
+    val actionBarHide: LiveData<Boolean>
+        get() = _actionBarHide
+
     init {
         _progress.value = View.GONE
+        _actionBarHide.value = true
     }
 
     private val _title = MutableLiveData<String>()
