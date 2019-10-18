@@ -82,4 +82,5 @@ fun downloadJson(lifecycleOwner: LifecycleOwner, url: String) {
 * [ ] Efficiently decoding Bitmap by following [Official documentation](https://developer.android.com/topic/performance/graphics/load-bitmap)
 * [ ] Make `PinDownloader<T>` return a sealed class object `Pin<T>` containing `Loading`, `Success`, `Failure` data classes instead of returning just `T`
 * [x] Publish the library to [Jitpack.io](https://jitpack.io/)/[Bintray](https://bintray.com/)
-* [ ] LocalUnitTests, IntegrationTests and UITests
+* [ ] LocalUnitTests, IntegrationTests and UITests for sample project
+* [x] Roaim Cache module, including in memory and disk cache
