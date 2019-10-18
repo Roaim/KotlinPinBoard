@@ -71,7 +71,9 @@ class BitmapPinDownloaderTest {
 
         bitmapPinDownloader.download(url).apply {
             observeForTesting {
-                verify(mockCache).addContentToCache(url, value)
+                value?.also { value ->
+                    verify(mockCache).addContentToCache(url, value)
+                }
             }
         }
     }

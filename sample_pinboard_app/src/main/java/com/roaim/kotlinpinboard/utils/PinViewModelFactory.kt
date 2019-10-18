@@ -6,6 +6,7 @@ import com.roaim.kotlinpinboard.data.PinRepository
 import com.roaim.kotlinpinboard.pinboard.PinBoardViewModel
 import com.roaim.kotlinpinboard.pindetails.PinDetailsViewModel
 
+@ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class PinViewModelFactory(private val repository: PinRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

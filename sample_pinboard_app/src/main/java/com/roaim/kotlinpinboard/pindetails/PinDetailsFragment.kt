@@ -14,6 +14,7 @@ import com.roaim.kotlinpinboard.data.PinRepository
 import com.roaim.kotlinpinboard.databinding.PinDetailsFragmentBinding
 import com.roaim.kotlinpinboard.utils.PinViewModelFactory
 
+@ExperimentalStdlibApi
 class PinDetailsFragment : Fragment() {
 
     private val viewModel by viewModels<PinDetailsViewModel> { PinViewModelFactory(PinRepository()) }
@@ -38,7 +39,7 @@ class PinDetailsFragment : Fragment() {
             it.viewmodel = viewModel
             binding = it
         }.run {
-            lifecycleOwner = this@PinDetailsFragment
+            lifecycleOwner = viewLifecycleOwner
             val safeArg = PinDetailsFragmentArgs.fromBundle(arguments!!)
             viewModel.setTitle(safeArg.title ?: "Something wrong!")
             viewModel.downloadImage(safeArg.thumbUrl)

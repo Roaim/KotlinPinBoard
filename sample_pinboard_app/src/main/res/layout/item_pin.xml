@@ -5,8 +5,8 @@
     <data>
 
         <variable
-                name="vm"
-                type="com.roaim.kotlinpinboard.pinboard.PinBoardViewModel"/>
+                name="listener"
+                type="com.roaim.kotlinpinboard.pinboard.PinClickListener" />
 
         <variable
                 name="pin"
@@ -18,7 +18,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
-            android:onClick="@{(v)->vm.onPinClick(v, pin)}"
+            android:onClick="@{(v)->listener.onPinClick(v, pin)}"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

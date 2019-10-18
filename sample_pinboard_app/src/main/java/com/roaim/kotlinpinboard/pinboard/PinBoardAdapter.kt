@@ -13,7 +13,14 @@ import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.databinding.ItemPinBinding
 import com.roaim.kotlinpinboard.utils.observeOnce
 
+@ExperimentalStdlibApi
 class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<LoremPicksum, ViewHolder>(PinDiffCallback()) {
+
+    private var mListener: PinClickListener? = null
+
+    fun setPinClickListener(listener: PinClickListener) {
+        mListener = listener
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -24,10 +31,11 @@ class PinAdapter(private val viewModel: PinBoardViewModel) : PagedListAdapter<Lo
         if (viewModel.progress.value == View.VISIBLE) {
             viewModel.progress.value = View.GONE
         }
-        return ViewHolder.from(parent, viewModel)
+        return ViewHolder.from(parent, viewModel, mListener)
     }
 }
 
+@ExperimentalStdlibApi
 class ViewHolder private constructor(private val binding: ItemPinBinding, private val viewModel: PinBoardViewModel) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -53,15 +61,20 @@ class ViewHolder private constructor(private val binding: ItemPinBinding, privat
     companion object {
         fun from(
             parent: ViewGroup,
-            viewModel: PinBoardViewModel
+            viewModel: PinBoardViewModel,
+            pinListener: PinClickListener?
         ): ViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return ItemPinBinding.inflate(layoutInflater, parent, false).run {
-                vm = viewModel
+                listener = pinListener
                 ViewHolder(this, viewModel)
             }
         }
     }
+}
+
+interface PinClickListener {
+    fun onPinClick(view: View, pin: LoremPicksum)
 }
 
 /**

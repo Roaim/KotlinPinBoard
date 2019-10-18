@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.roaim.kotlinpinboard.data.PinRepository
 import com.roaim.kotlinpinboard.utils.observeOnce
 
+@ExperimentalStdlibApi
 class PinDetailsViewModel(private val repository: PinRepository) : ViewModel() {
     private val _progress = MutableLiveData<Int>()
     val progress: LiveData<Int>

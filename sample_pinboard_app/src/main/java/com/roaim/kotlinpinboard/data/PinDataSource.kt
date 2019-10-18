@@ -1,19 +1,24 @@
 package com.roaim.kotlinpinboard.data
 
+import android.os.Environment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.paging.PageKeyedDataSource
+import com.roaim.kotlinpinboard.BuildConfig
 import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.utils.Constants
 import com.roaim.kotlinpinboard.utils.observeOnceInMain
-import com.roaim.pindownloader.BitmapPinDownloader
-import com.roaim.pindownloader.JsonPinDownloader
-import com.roaim.pindownloader.toPoJo
+import com.roaim.pindownloader.*
 
+@ExperimentalStdlibApi
 class PinDataSource(
-    private val jsonPinDownloader: JsonPinDownloader = JsonPinDownloader(),
-    private val bitmapPinDownloader: BitmapPinDownloader = BitmapPinDownloader()
+    private val jsonPinDownloader: JsonPinDownloader = JsonPinDownloader(JsonCacheDataSource("${Environment.getDataDirectory()}/data/${BuildConfig.APPLICATION_ID}/files/cache/json")),
+    private val bitmapPinDownloader: BitmapPinDownloader = BitmapPinDownloader(
+        BitmapCacheDataSource(
+            "${Environment.getDataDirectory()}/data/${BuildConfig.APPLICATION_ID}/files/cache/bmp"
+        )
+    )
 ) : PageKeyedDataSource<Int, LoremPicksum>() {
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, LoremPicksum>) {
     }
