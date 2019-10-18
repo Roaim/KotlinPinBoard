@@ -2,10 +2,13 @@ package com.roaim.pindownloader
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.roaim.cache.CacheConfig
+import com.roaim.cache.RoaimCache
 import com.roaim.pindownloader.core.CacheDataSource
 import com.roaim.pindownloader.core.PinDownloader
 import com.roaim.pindownloader.core.RemoteDataSource
 import okhttp3.ResponseBody
+import java.io.ByteArrayOutputStream
 
 object BitmapRemoteDataSource : RemoteDataSource<Bitmap>() {
     override suspend fun convert(response: ResponseBody?): Bitmap? =
@@ -16,10 +19,22 @@ object BitmapRemoteDataSource : RemoteDataSource<Bitmap>() {
 
 }
 
-object BitmapCacheDataSource : CacheDataSource<Bitmap>() {
-    override fun getContentLength(content: Bitmap): Int = content.byteCount
-}
+open class BitmapCacheDataSource(cacheDir: String) : CacheDataSource<Bitmap>(RoaimCache(
+    CacheConfig.Builder()
+        .setCacheDir(cacheDir)
+        .build(),
+    {
+        val stream = ByteArrayOutputStream()
+        it.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        stream.toByteArray()
+    },
+    {
+        BitmapFactory.decodeByteArray(it, 0, it.size)
+    }
+))
 
-open class BitmapPinDownloader(cacheDataSource: CacheDataSource<Bitmap> = BitmapCacheDataSource, remoteDataSource: RemoteDataSource<Bitmap> = BitmapRemoteDataSource
+open class BitmapPinDownloader(
+    cacheDataSource: CacheDataSource<Bitmap>,
+    remoteDataSource: RemoteDataSource<Bitmap> = BitmapRemoteDataSource
 ) : PinDownloader<Bitmap>(cacheDataSource, remoteDataSource)
 

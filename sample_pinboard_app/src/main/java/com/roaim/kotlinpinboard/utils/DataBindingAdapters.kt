@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.roaim.kotlinpinboard.data.model.LoremPicksum
 import com.roaim.kotlinpinboard.pinboard.PinAdapter
 
+@UseExperimental(ExperimentalStdlibApi::class)
 @BindingAdapter("pinItems")
 fun setItems(listView: RecyclerView, items: LiveData<PagedList<LoremPicksum>>) {
     listView.let { it.adapter as PinAdapter }.run {

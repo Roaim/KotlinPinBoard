@@ -5,6 +5,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.roaim.kotlinpinboard.data.model.LoremPicksum
 
+@ExperimentalStdlibApi
 class PinRepository(private val pinDataSource: PinDataSource = PinDataSource()) {
     private val dataSourceFactory = PinDataSourceFactory(pinDataSource)
 

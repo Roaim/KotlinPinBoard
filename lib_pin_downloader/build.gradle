@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -68,8 +68,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-support:$dagger2_version"
 */
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-beta01'
     implementation 'com.google.guava:guava:28.0-android'
+    implementation project(path: ':lib_roaim_cache')
 }
 repositories {
     mavenCentral()
